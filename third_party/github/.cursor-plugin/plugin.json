@@ -30,16 +30,5 @@
     "mcp",
     "repositories"
   ],
-  "variables": {
-    "type": "object",
-    "properties": {
-      "GITHUB_PERSONAL_ACCESS_TOKEN": {
-        "type": "string",
-        "title": "GitHub personal access token",
-        "description": "Fine-grained or classic PAT from https://github.com/settings/tokens with the repo scopes you want the agent to use."
-      }
-    },
-    "required": ["GITHUB_PERSONAL_ACCESS_TOKEN"]
-  },
   "mcpServers": "./mcp.json"
 }
