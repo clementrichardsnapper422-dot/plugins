@@ -2,7 +2,7 @@
 
 Cursor plugin that connects agents to [GitHub](https://github.com) through GitHub's official remote [Model Context Protocol](https://modelcontextprotocol.io/) server.
 
-Work with repositories, issues, pull requests, code search, and Actions under the permissions granted during GitHub authorization.
+Work with repositories, issues, pull requests, code search, and Actions under the permissions of a GitHub personal access token you provide.
 
 ## MCP
 
@@ -11,7 +11,10 @@ Work with repositories, issues, pull requests, code search, and Actions under th
   "mcpServers": {
     "github": {
       "type": "http",
-      "url": "https://api.githubcopilot.com/mcp/"
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
     }
   }
 }
@@ -19,11 +22,16 @@ Work with repositories, issues, pull requests, code search, and Actions under th
 
 ## Authentication
 
-The hosted GitHub MCP server supports client-managed authorization. The plugin intentionally does not inject a personal access token or require a `GITHUB_PERSONAL_ACCESS_TOKEN` variable.
+This marketplace plugin uses token authentication rather than browser OAuth. GitHub's hosted MCP endpoint supports OAuth only when the MCP host has its own GitHub OAuth/GitHub App integration. A private marketplace plugin does not supply that host registration by itself.
 
-When the client connects to the remote MCP server, complete the GitHub authorization flow presented by the client. The resulting access is limited by the permissions granted through GitHub.
+### Configure the token
 
-If authorization was previously attempted with the older 1.0.0 plugin, refresh or reinstall the plugin after upgrading to 1.0.1 so the client reloads the MCP configuration.
+1. Create a fine-grained GitHub personal access token at https://github.com/settings/tokens.
+2. Grant only the repositories and permissions the Bot needs. Typical permissions are repository Contents, Issues, Pull requests, Actions, and Metadata.
+3. In the Cursor/Grok Bot plugin configuration, set **GitHub personal access token** (`GITHUB_PERSONAL_ACCESS_TOKEN`). Secret values belong in plugin configuration, not in this repository.
+4. Reinstall or refresh the GitHub plugin after upgrading to version 1.0.2 so the updated manifest is loaded.
+
+If the token variable is missing, the remote MCP request cannot form a valid `Authorization: Bearer ...` header and the connector will fail to load.
 
 ## Docs
 

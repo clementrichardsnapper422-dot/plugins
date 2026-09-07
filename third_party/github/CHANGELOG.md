@@ -2,6 +2,13 @@
 
 All notable changes to this plugin will be documented here.
 
+## 1.0.2 — restore PAT authentication for private hosts
+
+- Restored the required `GITHUB_PERSONAL_ACCESS_TOKEN` plugin variable.
+- Restored the `Authorization: Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}` header for the remote GitHub MCP server.
+- Documented why a private marketplace plugin cannot rely on browser OAuth unless its MCP host has a registered GitHub OAuth/GitHub App integration.
+- Added Grok Bot setup guidance for configuring the token outside the repository.
+
 ## 1.0.1 — client-managed authorization
 
 - Removed the required `GITHUB_PERSONAL_ACCESS_TOKEN` plugin variable.
